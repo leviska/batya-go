@@ -1,25 +1,25 @@
-package telegram
+package discord
 
 import (
 	"log"
 	"os"
 	"testing"
 
+	"github.com/diamondburned/arikawa/gateway"
 	"github.com/leviska/batya-go/batya"
-	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 func TestPingPong(t *testing.T) {
-	token := os.Getenv("TELEGRAM_TOKEN")
-	network, err := NewTelegram(token)
+	token := os.Getenv("DISCORD_TOKEN")
+	network, err := NewDiscord(token)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
 	network.HandleText(func(n batya.Network, m batya.Message) {
-		mTG := m.(*tb.Message)
-		n.SendMessage(mTG.Sender, mTG.Text)
+		mD := m.(*gateway.MessageCreateEvent)
+		n.SendMessage(mD.ChannelID, mD.Message.Content)
 	})
 
 	network.Start()

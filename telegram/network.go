@@ -26,7 +26,7 @@ func NewTelegram(token string) (*Network, error) {
 
 func (n *Network) HandleText(callback batya.TextCallback) {
 	n.Bot.Handle(tb.OnText, func(message *tb.Message) {
-		callback(n, NewMessage(message))
+		callback(n, message)
 	})
 }
 
