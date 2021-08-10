@@ -24,6 +24,8 @@ func MessageAdapter(m *tb.Message) *batya.Message {
 			ID: ID(m.Sender.ID),
 			Name: m.Sender.FirstName,
 		},
+		SourceID: ID(m.Sender.ID),
+		Source: "telegram",
 		Original: m,
 	}
 }

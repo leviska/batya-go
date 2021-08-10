@@ -12,7 +12,8 @@ func MessageAdapter(m *gateway.MessageCreateEvent) *batya.Message {
 			ID: m.Author.ID, 
 			Name: m.Author.Username,
 		},
-		ChatID: m.ChannelID,
+		SourceID: m.ChannelID,
+		Source: "discord",
 		Original: m,
 	}
 }

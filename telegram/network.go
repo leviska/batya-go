@@ -31,10 +31,11 @@ func (n *Network) HandleText(callback batya.TextCallback) {
 }
 
 func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
-	_, err := n.Bot.Send(to.(ID), message)
+	_, err := n.Bot.Send(to.(ID), message.Text.Text)
 	return err
 }
 
-func (n *Network) Start() {
+func (n *Network) Start() error {
 	n.Bot.Start()
+	return nil
 }
