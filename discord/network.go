@@ -28,13 +28,13 @@ func NewDiscord(token string) (*Network, error) {
 func (n *Network) HandleText(callback batya.TextCallback) {
 	n.Bot.AddHandler(func(c *gateway.MessageCreateEvent) {
 		if c.Author.ID != n.Me.ID {
-			callback(n, c)
+			callback(n, MessageAdapter(c))
 		}
 	})
 }
 
-func (n *Network) SendMessage(to batya.User, message batya.Message) error {
-	_, err := n.Bot.SendMessage((to.(discord.ChannelID)), message.(string), nil)
+func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
+	_, err := n.Bot.SendMessage(to.(discord.ChannelID), message.Text.Text, nil)
 	return err
 }
 

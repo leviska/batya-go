@@ -26,13 +26,12 @@ func NewTelegram(token string) (*Network, error) {
 
 func (n *Network) HandleText(callback batya.TextCallback) {
 	n.Bot.Handle(tb.OnText, func(message *tb.Message) {
-		callback(n, message)
+		callback(n, MessageAdapter(message))
 	})
 }
 
-func (n *Network) SendMessage(to batya.User, message batya.Message) error {
-	toTG := to.(*tb.User)
-	_, err := n.Bot.Send(toTG, message)
+func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
+	_, err := n.Bot.Send(to.(ID), message)
 	return err
 }
 

@@ -1,5 +1,7 @@
 package batya
 
-type ID interface {
+import "fmt"
 
+type ID interface {
+	fmt.Stringer
 }

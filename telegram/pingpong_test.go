@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/leviska/batya-go/batya"
-	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 func TestPingPong(t *testing.T) {
@@ -17,9 +16,8 @@ func TestPingPong(t *testing.T) {
 		return
 	}
 
-	network.HandleText(func(n batya.Network, m batya.Message) {
-		mTG := m.(*tb.Message)
-		n.SendMessage(mTG.Sender, mTG.Text)
+	network.HandleText(func(n batya.Network, m *batya.Message) {
+		n.SendMessage(m.Sender.ID, m)
 	})
 
 	network.Start()

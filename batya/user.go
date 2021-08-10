@@ -1,5 +1,6 @@
 package batya
 
-type User interface {
-
+type User struct {
+	ID ID
+	Name string
 }

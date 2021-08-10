@@ -1,5 +1,10 @@
 package batya
 
-type Message interface {
-	
+type Message struct {
+	Text   *Text
+	Photos []*Photo
+	Sender *User
+	ChatID ID
+
+	Original interface{}
 }

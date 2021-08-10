@@ -5,7 +5,6 @@ import (
 	"os"
 	"testing"
 
-	"github.com/diamondburned/arikawa/gateway"
 	"github.com/leviska/batya-go/batya"
 )
 
@@ -17,9 +16,8 @@ func TestPingPong(t *testing.T) {
 		return
 	}
 
-	network.HandleText(func(n batya.Network, m batya.Message) {
-		mD := m.(*gateway.MessageCreateEvent)
-		n.SendMessage(mD.ChannelID, mD.Message.Content)
+	network.HandleText(func(n batya.Network, m *batya.Message) {
+		n.SendMessage(m.ChatID, m)
 	})
 
 	network.Start()
