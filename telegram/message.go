@@ -13,6 +13,10 @@ func (id ID) String() string {
 	return strconv.Itoa(int(id))
 }
 
+func (ID) Source() string {
+	return "telegram"
+}
+
 func (id ID) Recipient() string {
 	return id.String()
 }
@@ -25,7 +29,7 @@ func MessageAdapter(m *tb.Message) *batya.Message {
 			Name: m.Sender.FirstName,
 		},
 		SourceID: ID(m.Sender.ID),
-		Source: "telegram",
+		SourceName: NetworkName,
 		Original: m,
 	}
 }

@@ -7,6 +7,8 @@ import (
 	"github.com/leviska/batya-go/batya"
 )
 
+const NetworkName = "discord"
+
 type Network struct {
 	Bot *session.Session
 	Me  *discord.User
@@ -25,6 +27,10 @@ func NewDiscord(token string) (*Network, error) {
 	}, nil
 }
 
+func (n *Network) Source() string {
+	return NetworkName
+}
+
 func (n *Network) HandleText(callback batya.TextCallback) {
 	n.Bot.AddHandler(func(c *gateway.MessageCreateEvent) {
 		if c.Author.ID != n.Me.ID {
@@ -34,7 +40,7 @@ func (n *Network) HandleText(callback batya.TextCallback) {
 }
 
 func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
-	_, err := n.Bot.SendMessage(to.(discord.ChannelID), message.Text.Text, nil)
+	_, err := n.Bot.SendMessage(discord.ChannelID(to.(ID)), message.Text.Text, nil)
 	return err
 }
 

@@ -6,6 +6,10 @@ type Message struct {
 	Sender   *User
 	SourceID ID
 
-	Source   string
-	Original interface{}
+	SourceName string
+	Original   interface{}
+}
+
+func (m *Message) Source() string {
+	return m.SourceName
 }

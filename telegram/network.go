@@ -7,6 +7,8 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
+const NetworkName = "telegram"
+
 type Network struct {
 	Bot *tb.Bot
 }
@@ -22,6 +24,10 @@ func NewTelegram(token string) (*Network, error) {
 	return &Network{
 		Bot: bot,
 	}, nil
+}
+
+func (n *Network) Source() string {
+	return NetworkName
 }
 
 func (n *Network) HandleText(callback batya.TextCallback) {
