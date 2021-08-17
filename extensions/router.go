@@ -15,7 +15,7 @@ type Router struct {
 
 func NewRouter(network batya.Network) *Router {
 	router := &Router{
-		handlers:    routerMap{},
+		handlers: routerMap{},
 	}
 	network.Handle(func(n batya.Network, m *batya.Message) {
 		router.handle(n, m)
@@ -68,7 +68,7 @@ func (r *Router) tryCommand(n batya.Network, m *batya.Message) bool {
 		pos++
 	}
 	m.Text.Text = text[pos:]
-	
+
 	handler(n, m)
 	return true
 }

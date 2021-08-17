@@ -9,7 +9,6 @@ import (
 	"github.com/leviska/batya-go/test"
 )
 
-
 func TestAuth(t *testing.T) {
 	network := test.CreateUniverasl()
 	router := extensions.NewRouter(network)

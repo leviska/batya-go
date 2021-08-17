@@ -4,7 +4,7 @@ type MessageCallback func(Network, *Message)
 
 type Receiver interface {
 	Sourcer
-	Handle(callback MessageCallback)	
+	Handle(callback MessageCallback)
 }
 
 type Sender interface {
@@ -21,4 +21,3 @@ type Network interface {
 	SendReceiver
 	Start() error
 }
- 

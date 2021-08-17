@@ -25,11 +25,11 @@ func MessageAdapter(m *tb.Message) *batya.Message {
 	return &batya.Message{
 		Text: &batya.Text{Text: m.Text},
 		Sender: &batya.User{
-			ID: ID(m.Sender.ID),
+			ID:   ID(m.Sender.ID),
 			Name: m.Sender.FirstName,
 		},
-		SourceID: ID(m.Sender.ID),
+		SourceID:   ID(m.Sender.ID),
 		SourceName: NetworkName,
-		Original: m,
+		Original:   m,
 	}
 }

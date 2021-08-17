@@ -1,6 +1,6 @@
 package batya
 
 type User struct {
-	ID ID
+	ID   ID
 	Name string
 }

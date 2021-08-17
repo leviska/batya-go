@@ -22,11 +22,11 @@ func MessageAdapter(m *gateway.MessageCreateEvent) *batya.Message {
 	return &batya.Message{
 		Text: &batya.Text{Text: m.Content},
 		Sender: &batya.User{
-			ID: ID(m.Author.ID), 
+			ID:   ID(m.Author.ID),
 			Name: m.Author.Username,
 		},
-		SourceID: ID(m.ChannelID),
+		SourceID:   ID(m.ChannelID),
 		SourceName: NetworkName,
-		Original: m,
+		Original:   m,
 	}
 }
