@@ -1,6 +1,8 @@
 package discord
 
 import (
+	"strconv"
+
 	"github.com/diamondburned/arikawa/discord"
 	"github.com/diamondburned/arikawa/gateway"
 	"github.com/leviska/batya-go/batya"
@@ -13,7 +15,7 @@ func (ID) Source() string {
 }
 
 func (id ID) String() string {
-	return id.String() 
+	return strconv.FormatUint(uint64(id), 10)
 }
 
 func MessageAdapter(m *gateway.MessageCreateEvent) *batya.Message {

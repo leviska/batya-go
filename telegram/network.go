@@ -30,7 +30,7 @@ func (n *Network) Source() string {
 	return NetworkName
 }
 
-func (n *Network) HandleText(callback batya.TextCallback) {
+func (n *Network) Handle(callback batya.MessageCallback) {
 	n.Bot.Handle(tb.OnText, func(message *tb.Message) {
 		callback(n, MessageAdapter(message))
 	})

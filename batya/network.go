@@ -1,10 +1,24 @@
 package batya
 
-type TextCallback func(Network, *Message)
+type MessageCallback func(Network, *Message)
+
+type Receiver interface {
+	Sourcer
+	Handle(callback MessageCallback)	
+}
+
+type Sender interface {
+	Sourcer
+	SendMessage(to ID, message *Message) error
+}
+
+type SendReceiver interface {
+	Sender
+	Receiver
+}
 
 type Network interface {
-	Sourcer
-	HandleText(callback TextCallback)
-	SendMessage(to ID, message *Message) error
+	SendReceiver
 	Start() error
 }
+ 

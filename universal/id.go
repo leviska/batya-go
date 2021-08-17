@@ -5,13 +5,13 @@ import "github.com/leviska/batya-go/batya"
 type IDMap map[string]batya.ID
 
 type ID struct {
-	idMap IDMap
+	IDs IDMap
 }
 
-func (id ID) String() string {
+func (id *ID) String() string {
 	return "unimplement"
 }
 
-func (id ID) Source() string {
+func (id *ID) Source() string {
 	return NetworkName
 }

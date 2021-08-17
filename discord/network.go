@@ -31,7 +31,7 @@ func (n *Network) Source() string {
 	return NetworkName
 }
 
-func (n *Network) HandleText(callback batya.TextCallback) {
+func (n *Network) Handle(callback batya.MessageCallback) {
 	n.Bot.AddHandler(func(c *gateway.MessageCreateEvent) {
 		if c.Author.ID != n.Me.ID {
 			callback(n, MessageAdapter(c))

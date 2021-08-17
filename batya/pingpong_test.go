@@ -11,7 +11,7 @@ func TestPingPong(t *testing.T) {
 	networks := test.CreateNetworks()
 
 	for _, ntw := range networks {
-		ntw.HandleText(func(n batya.Network, m *batya.Message) {
+		ntw.Handle(func(n batya.Network, m *batya.Message) {
 			n.SendMessage(m.SourceID, m)
 		})
 	}

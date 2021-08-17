@@ -6,25 +6,32 @@ import (
 	"github.com/leviska/batya-go/batya"
 )
 
-type routerMap map[string]batya.TextCallback
+type routerMap map[string]batya.MessageCallback
 
 type Router struct {
 	handlers    routerMap
-	textHandler batya.TextCallback
+	textHandler batya.MessageCallback
 }
 
-func NewRouter(network batya.Network, textHandler batya.TextCallback) *Router {
+func NewRouter(network batya.Network) *Router {
 	router := &Router{
 		handlers:    routerMap{},
-		textHandler: textHandler,
 	}
-	network.HandleText(func(n batya.Network, m *batya.Message) {
-		router.handleText(n, m)
+	network.Handle(func(n batya.Network, m *batya.Message) {
+		router.handle(n, m)
 	})
 	return router
 }
 
-func (r *Router) Handle(command string, handler batya.TextCallback) {
+func (r *Router) HandleText(handler batya.MessageCallback) {
+	r.textHandler = handler
+}
+
+func (r *Router) UnhandleText() {
+	r.textHandler = nil
+}
+
+func (r *Router) Handle(command string, handler batya.MessageCallback) {
 	r.handlers[command] = handler
 }
 
@@ -57,13 +64,16 @@ func (r *Router) tryCommand(n batya.Network, m *batya.Message) bool {
 	if handler == nil {
 		return false
 	}
+	if len(text) > pos {
+		pos++
+	}
 	m.Text.Text = text[pos:]
 	
 	handler(n, m)
 	return true
 }
 
-func (r *Router) handleText(n batya.Network, m *batya.Message) {
+func (r *Router) handle(n batya.Network, m *batya.Message) {
 	if !r.tryCommand(n, m) {
 		if r.textHandler != nil {
 			r.textHandler(n, m)

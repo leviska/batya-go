@@ -10,6 +10,14 @@ type Message struct {
 	Original   interface{}
 }
 
+func NewTextMessage(text string) *Message {
+	return &Message{
+		Text: &Text{
+			Text: text,
+		},
+	}
+}
+
 func (m *Message) Source() string {
 	return m.SourceName
 }

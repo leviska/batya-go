@@ -1,6 +1,7 @@
 package extensions_test
 
 import (
+	"log"
 	"testing"
 
 	"github.com/leviska/batya-go/batya"
@@ -8,14 +9,23 @@ import (
 	"github.com/leviska/batya-go/test"
 )
 
-func TestRouter(t *testing.T) {
+
+func TestAuth(t *testing.T) {
 	network := test.CreateUniverasl()
 	router := extensions.NewRouter(network)
+	auth := extensions.NewSimpleAuth(router)
+	auth.Start()
 	router.HandleText(func(n batya.Network, m *batya.Message) {
-		n.SendMessage(m.SourceID, m)
-	})
-	router.Handle("hi", func(n batya.Network, m *batya.Message) {
-		n.SendMessage(m.SourceID, m)
+		uni := auth.Get(m.SourceID)
+		var err error
+		if uni == nil {
+			err = n.SendMessage(m.SourceID, m)
+		} else {
+			err = n.SendMessage(uni, m)
+		}
+		if err != nil {
+			log.Panic(err)
+		}
 	})
 	network.Start()
 }

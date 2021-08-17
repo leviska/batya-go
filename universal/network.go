@@ -29,9 +29,11 @@ func (n *Network) Source() string {
 	return NetworkName
 }
 
-func (n *Network) HandleText(callback batya.TextCallback) {
+func (n *Network) Handle(callback batya.MessageCallback) {
 	for _, ntw := range n.networks {
-		ntw.HandleText(callback)
+		ntw.Handle(func(_ batya.Network, m *batya.Message) {
+			callback(n, m)
+		})
 	}
 }
 
@@ -44,9 +46,12 @@ func (n *Network) sendMessage(source string, to batya.ID, message *batya.Message
 }
 
 func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
-	if uniID, ok := to.(ID); ok {
-		for source, id := range uniID.idMap {
-			return n.sendMessage(source, id, message)
+	if uniID, ok := to.(*ID); ok {
+		for source, id := range uniID.IDs {
+			err := n.sendMessage(source, id, message)
+			if err != nil {
+				return err
+			}
 		}
 	} else {
 		return n.sendMessage(to.Source(), to, message)

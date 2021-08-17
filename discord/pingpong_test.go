@@ -16,7 +16,7 @@ func TestPingPong(t *testing.T) {
 		return
 	}
 
-	network.HandleText(func(n batya.Network, m *batya.Message) {
+	network.Handle(func(n batya.Network, m *batya.Message) {
 		n.SendMessage(m.SourceID, m)
 	})
 
