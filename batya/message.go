@@ -1,11 +1,13 @@
 package batya
 
 type Message struct {
-	Text     *Text
-	Photos   []*Photo
+	// Data
+	Text  *Text
+	Photo *Photo
+	// Meta
 	Sender   *User
 	SourceID ID
-
+	// Origin
 	SourceName string
 	Original   interface{}
 }

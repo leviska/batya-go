@@ -32,12 +32,15 @@ func (n *Network) Source() string {
 
 func (n *Network) Handle(callback batya.MessageCallback) {
 	n.Bot.Handle(tb.OnText, func(message *tb.Message) {
-		callback(n, MessageAdapter(message))
+		callback(n, n.ToMessageAdapter(message))
+	})
+	n.Bot.Handle(tb.OnPhoto, func(message *tb.Message) {
+		callback(n, n.ToMessageAdapter(message))
 	})
 }
 
 func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
-	_, err := n.Bot.Send(to.(ID), message.Text.Text)
+	_, err := n.Bot.Send(to.(ID), n.FromMessageAdapter(message))
 	return err
 }
 

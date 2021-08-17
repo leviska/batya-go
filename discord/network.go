@@ -34,13 +34,14 @@ func (n *Network) Source() string {
 func (n *Network) Handle(callback batya.MessageCallback) {
 	n.Bot.AddHandler(func(c *gateway.MessageCreateEvent) {
 		if c.Author.ID != n.Me.ID {
-			callback(n, MessageAdapter(c))
+			callback(n, n.ToMessageAdapter(&c.Message))
 		}
 	})
 }
 
 func (n *Network) SendMessage(to batya.ID, message *batya.Message) error {
-	_, err := n.Bot.SendMessage(discord.ChannelID(to.(ID)), message.Text.Text, nil)
+	text, embed := n.FromMessageAdapter(message)
+	_, err := n.Bot.SendMessage(discord.ChannelID(to.(ID)), text, embed)
 	return err
 }
 

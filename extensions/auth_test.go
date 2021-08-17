@@ -7,6 +7,7 @@ import (
 	"github.com/leviska/batya-go/batya"
 	"github.com/leviska/batya-go/extensions"
 	"github.com/leviska/batya-go/test"
+	"github.com/leviska/batya-go/universal"
 )
 
 func TestAuth(t *testing.T) {
@@ -20,7 +21,13 @@ func TestAuth(t *testing.T) {
 		if uni == nil {
 			err = n.SendMessage(m.SourceID, m)
 		} else {
-			err = n.SendMessage(uni, m)
+			to := universal.NewID()
+			for k, id := range uni.IDs {
+				if k != m.Source() {
+					to.IDs[k] = id
+				}
+			}
+			err = n.SendMessage(to, m)
 		}
 		if err != nil {
 			log.Panic(err)

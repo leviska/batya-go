@@ -86,12 +86,8 @@ func (a *SimpleAuther) set(id batya.ID, uni *universal.ID) {
 	ntw[id.String()] = uni
 }
 
-func (a *SimpleAuther) createUser(id batya.ID) *universal.ID {
-	return &universal.ID{IDs: universal.IDMap{}}
-}
-
 func (a *SimpleAuther) Create(id batya.ID) *universal.ID {
-	uni := a.createUser(id)
+	uni := universal.NewID()
 	a.set(id, uni)
 	return uni
 }

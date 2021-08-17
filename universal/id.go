@@ -8,6 +8,10 @@ type ID struct {
 	IDs IDMap
 }
 
+func NewID() *ID {
+	return &ID{IDs: IDMap{}}
+}
+
 func (id *ID) String() string {
 	return "unimplement"
 }
